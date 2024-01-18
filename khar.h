@@ -32,6 +32,8 @@ int khar_main(int argc, char *argv[]);
 
 #ifdef _WIN32
     #include "khar_win32.h"
+#else
+    #include "khar_linux.h"
 #endif
 
 
@@ -163,6 +165,13 @@ void khar_set_cursor_position(khar_window_t window, int x, int y);
 /* Creates a vulkan surface for provided window as per VK_KHR_surface extension specification.
  * https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/VK_KHR_surface.html
  */
+
+#if _WIN32
+    #define KHAR_VK_SURFACE_EXTENSION_NAME VK_KHR_WIN32_SURFACE_EXTENSION_NAME
+#else
+    #define KHAR_VK_SURFACE_EXTENSION_NAME VK_KHR_XLIB_SURFACE_EXTENSION_NAME
+#endif
+
 VkResult khar_create_surface(khar_window_t window, VkInstance instance, const VkAllocationCallbacks *p_allocator, VkSurfaceKHR *p_surface);
 
 #endif
