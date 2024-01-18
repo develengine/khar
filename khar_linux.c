@@ -125,6 +125,16 @@ int khar_poll_events(khar_event_t *event)
                 }
             } break;
 #endif
+
+#ifdef KHAR_USE_POINTER_EVENTS
+            case MotionNotify: {
+                event->type = khar_event_type_Pointer;
+                event->pointer.x = xevent.xmotion.x;
+                event->pointer.y = xevent.xmotion.y;
+                return 1;
+            } break;
+#endif
+
         }
     }
 
@@ -303,12 +313,14 @@ khar_window_t khar_create_window(int width, int height, const char *title, int r
     select_event_mask |= ButtonPressMask;
     select_event_mask |= ButtonReleaseMask;
 #endif
-#if 0
-    select_event_mask |= PointerMotionMask;
-    select_event_mask |= KeymapStateMask;
-#endif
 #ifdef KHAR_USE_RESIZE_EVENTS
     select_event_mask |= ExposureMask;
+#endif
+#ifdef KHAR_USE_POINTER_EVENTS
+    select_event_mask |= PointerMotionMask;
+#endif
+#if 0
+    select_event_mask |= KeymapStateMask;
 #endif
 
     XSelectInput(khar_linux.display, window, select_event_mask);

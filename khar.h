@@ -13,6 +13,7 @@
     #define KHAR_USE_BUTTON_EVENTS
     #define KHAR_USE_WHEEL_EVENTS
     #define KHAR_USE_RESIZE_EVENTS
+    #define KHAR_USE_POINTER_EVENTS
 #endif
 
 /* If defined, on Windows a console will appear when you run the program
@@ -39,12 +40,13 @@ int khar_main(int argc, char *argv[]);
 
 typedef enum
 {
-    khar_event_type_Quit,   /* Program wants to exit. */
-    khar_event_type_Key,    /* Key on keyboard was pressed or released. */
-    khar_event_type_Motion, /* Relative movement of mouse not affected by window or screen. */
-    khar_event_type_Button, /* Mouse button was pressed or released. */
-    khar_event_type_Wheel,  /* Mouse wheel was rolled. */
-    khar_event_type_Resize, /* Window was resized. */
+    khar_event_type_Quit,    /* Program wants to exit. */
+    khar_event_type_Key,     /* Key on keyboard was pressed or released. */
+    khar_event_type_Motion,  /* Relative movement of mouse not affected by window or screen. */
+    khar_event_type_Button,  /* Mouse button was pressed or released. */
+    khar_event_type_Wheel,   /* Mouse wheel was rolled. */
+    khar_event_type_Resize,  /* Window was resized. */
+    khar_event_type_Pointer, /* Absolute position of mouse pointer changed. */
 
     KHAR_EVENT_TYPE_COUNT
 } khar_event_type_t;
@@ -93,6 +95,10 @@ typedef struct
     int width, height;
 } khar_event_resize_t;
 
+typedef struct
+{
+    int x, y;
+} khar_event_pointer_t;
 
 typedef struct
 {
@@ -100,11 +106,12 @@ typedef struct
     khar_window_t window;
 
     union {
-        khar_event_key_t    key;
-        khar_event_motion_t motion;
-        khar_event_button_t button;
-        khar_event_wheel_t  wheel;
-        khar_event_resize_t resize;
+        khar_event_key_t     key;
+        khar_event_motion_t  motion;
+        khar_event_button_t  button;
+        khar_event_wheel_t   wheel;
+        khar_event_resize_t  resize;
+        khar_event_pointer_t pointer;
     };
 } khar_event_t;
 
