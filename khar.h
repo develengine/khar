@@ -70,7 +70,7 @@ typedef struct
 
 typedef enum
 {
-    khar_button_Left,
+    khar_button_Left = 0,
     khar_button_Middle,
     khar_button_Right,
 } khar_button_t;

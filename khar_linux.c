@@ -72,7 +72,7 @@ int khar_poll_events(khar_event_t *event)
 #ifdef KHAR_USE_BUTTON_EVENTS
             else {
                 event->type = khar_event_type_Button;
-                event->button.type = (khar_button_t)button_code; // NOTE: Works out to fit the enumeration.
+                event->button.type = (khar_button_t)button_code - 1; // NOTE: Works out to fit the enumeration.
                 event->button.is_down = xevent.type == ButtonPress;
                 event->button.x = xevent.xbutton.x;
                 event->button.y = xevent.xbutton.y;
